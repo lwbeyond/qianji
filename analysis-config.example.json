@@ -1,0 +1,1 @@
+{"enabled":true,"model":"qwen3.5:9b-32k","think":false,"num_ctx":8192,"num_predict":1536}

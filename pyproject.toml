@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qianji-local"
+version = "1.0.0"
+description = "Local Qianji import, revision history and read-only data API"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+qianji = "qianji.__main__:main"
+
+[tool.setuptools]
+packages = ["qianji", "integrations"]

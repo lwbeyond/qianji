@@ -1,0 +1,1074 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "fact": {
+      "type": "object",
+      "required": [
+        "id",
+        "ledger_id",
+        "source_key",
+        "revision",
+        "occurred_at",
+        "date_local",
+        "source_date",
+        "utc_offset",
+        "timezone_basis",
+        "kind",
+        "source_type",
+        "amount",
+        "currency",
+        "category",
+        "remark",
+        "asset_id",
+        "from_asset_id",
+        "to_asset_id",
+        "related_source_key",
+        "related_record_id",
+        "reimbursement_code",
+        "source_file_sha256",
+        "source_row",
+        "source_fingerprint",
+        "label_basis",
+        "dimensions",
+        "classification",
+        "proposed_labels"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^qj_[a-f0-9]{64}$"
+        },
+        "ledger_id": {
+          "type": "string"
+        },
+        "source_key": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "date_local": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_date": {
+          "type": "string"
+        },
+        "utc_offset": {
+          "type": "string",
+          "pattern": "^[+-][0-9]{2}:[0-9]{2}$"
+        },
+        "timezone_basis": {
+          "const": "configured_fixed_offset"
+        },
+        "kind": {
+          "enum": [
+            "expense",
+            "income",
+            "refund",
+            "transfer"
+          ]
+        },
+        "source_type": {
+          "enum": [
+            "支出",
+            "收入",
+            "退款",
+            "转账"
+          ]
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{2}$"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "category": {
+          "type": "string"
+        },
+        "remark": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "asset_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "from_asset_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "to_asset_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "related_source_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "related_record_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reimbursement_code": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "source_file_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "source_row": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_fingerprint": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "label_basis": {
+          "$ref": "#/$defs/label_basis"
+        },
+        "dimensions": {
+          "type": "object",
+          "required": [
+            "month",
+            "week",
+            "weekday",
+            "category_l1",
+            "category_l2",
+            "category_l3",
+            "channel",
+            "context",
+            "meal",
+            "merchant"
+          ],
+          "properties": {
+            "month": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}$"
+            },
+            "week": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-W[0-9]{2}$"
+            },
+            "weekday": {
+              "enum": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7"
+              ]
+            },
+            "category_l1": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "category_l2": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "category_l3": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "channel": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "context": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "meal": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "merchant": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "classification": {
+          "type": "object",
+          "required": [
+            "category_l1",
+            "category_l2",
+            "category_l3",
+            "channel",
+            "context",
+            "meal",
+            "merchant"
+          ],
+          "properties": {
+            "category_l1": {
+              "$ref": "#/$defs/decision"
+            },
+            "category_l2": {
+              "$ref": "#/$defs/decision"
+            },
+            "category_l3": {
+              "$ref": "#/$defs/decision"
+            },
+            "channel": {
+              "$ref": "#/$defs/decision"
+            },
+            "context": {
+              "$ref": "#/$defs/decision"
+            },
+            "meal": {
+              "$ref": "#/$defs/decision"
+            },
+            "merchant": {
+              "$ref": "#/$defs/decision"
+            }
+          },
+          "additionalProperties": false
+        },
+        "proposed_labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/proposed_label"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "required": [
+        "value",
+        "state",
+        "candidates",
+        "evidence"
+      ],
+      "properties": {
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "enum": [
+            "known",
+            "unknown",
+            "ambiguous",
+            "not_applicable"
+          ]
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "state": {
+            "const": "known"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "minItems": 1
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "value": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "dimension",
+        "label",
+        "field",
+        "evidence",
+        "method",
+        "state"
+      ],
+      "properties": {
+        "dimension": {
+          "enum": [
+            "item",
+            "channel",
+            "context",
+            "meal",
+            "record_note",
+            "merchant",
+            "remark_detail",
+            "source_category"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "enum": [
+            "category",
+            "remark"
+          ]
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "enum": [
+            "rule",
+            "manual",
+            "model"
+          ]
+        },
+        "state": {
+          "enum": [
+            "automatic",
+            "confirmed",
+            "proposed"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "proposed_label": {
+      "type": "object",
+      "required": [
+        "dimension",
+        "label",
+        "field",
+        "evidence",
+        "method",
+        "state"
+      ],
+      "properties": {
+        "dimension": {
+          "enum": [
+            "item",
+            "channel",
+            "context",
+            "meal",
+            "record_note",
+            "merchant"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "enum": [
+            "category",
+            "remark"
+          ]
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "const": "model"
+        },
+        "state": {
+          "const": "proposed"
+        },
+        "recipe": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "evaluation_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model_digest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "label_basis": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "analysis_ref",
+        "source_snapshot_ref",
+        "input_hash"
+      ],
+      "properties": {
+        "analysis_ref": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "source_snapshot_ref": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}:[0-9]+@[0-9a-f]{64}$"
+        },
+        "input_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "taxonomy": {
+      "type": "object",
+      "required": [
+        "version",
+        "recipe",
+        "nodes",
+        "dimensions",
+        "semantics"
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recipe": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "parent_id",
+              "level",
+              "label"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "parent_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "level": {
+                "enum": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "dimensions": {
+          "const": [
+            "category_l1",
+            "category_l2",
+            "category_l3",
+            "channel",
+            "context",
+            "meal",
+            "merchant"
+          ]
+        },
+        "semantics": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "quality": {
+      "type": "object",
+      "required": [
+        "records",
+        "classification",
+        "expense_coverage",
+        "notes",
+        "proposed_records_by_dimension",
+        "refund_links",
+        "label_coverage",
+        "semantics"
+      ],
+      "properties": {
+        "records": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "classification": {
+          "type": "object",
+          "required": [
+            "category_l1",
+            "category_l2",
+            "category_l3",
+            "channel",
+            "context",
+            "meal",
+            "merchant"
+          ],
+          "properties": {
+            "category_l1": {
+              "type": "object",
+              "required": [
+                "known",
+                "unknown",
+                "ambiguous",
+                "not_applicable"
+              ],
+              "properties": {
+                "known": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "unknown": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "ambiguous": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "not_applicable": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "category_l2": {
+              "type": "object",
+              "required": [
+                "known",
+                "unknown",
+                "ambiguous",
+                "not_applicable"
+              ],
+              "properties": {
+                "known": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "unknown": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "ambiguous": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "not_applicable": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "category_l3": {
+              "type": "object",
+              "required": [
+                "known",
+                "unknown",
+                "ambiguous",
+                "not_applicable"
+              ],
+              "properties": {
+                "known": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "unknown": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "ambiguous": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "not_applicable": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "channel": {
+              "type": "object",
+              "required": [
+                "known",
+                "unknown",
+                "ambiguous",
+                "not_applicable"
+              ],
+              "properties": {
+                "known": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "unknown": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "ambiguous": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "not_applicable": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "context": {
+              "type": "object",
+              "required": [
+                "known",
+                "unknown",
+                "ambiguous",
+                "not_applicable"
+              ],
+              "properties": {
+                "known": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "unknown": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "ambiguous": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "not_applicable": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "meal": {
+              "type": "object",
+              "required": [
+                "known",
+                "unknown",
+                "ambiguous",
+                "not_applicable"
+              ],
+              "properties": {
+                "known": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "unknown": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "ambiguous": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "not_applicable": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "merchant": {
+              "type": "object",
+              "required": [
+                "known",
+                "unknown",
+                "ambiguous",
+                "not_applicable"
+              ],
+              "properties": {
+                "known": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "unknown": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "ambiguous": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "not_applicable": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "expense_coverage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ledger_id",
+              "currency",
+              "dimension",
+              "states"
+            ],
+            "properties": {
+              "ledger_id": {
+                "type": "string"
+              },
+              "currency": {
+                "type": "string",
+                "pattern": "^[A-Z]{3}$"
+              },
+              "dimension": {
+                "enum": [
+                  "category_l1",
+                  "category_l2",
+                  "category_l3",
+                  "channel",
+                  "context",
+                  "meal",
+                  "merchant"
+                ]
+              },
+              "states": {
+                "type": "object",
+                "required": [
+                  "known",
+                  "unknown",
+                  "ambiguous",
+                  "not_applicable"
+                ],
+                "properties": {
+                  "known": {
+                    "type": "object",
+                    "required": [
+                      "count",
+                      "expense"
+                    ],
+                    "properties": {
+                      "count": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "expense": {
+                        "type": "string",
+                        "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{2}$"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "unknown": {
+                    "type": "object",
+                    "required": [
+                      "count",
+                      "expense"
+                    ],
+                    "properties": {
+                      "count": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "expense": {
+                        "type": "string",
+                        "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{2}$"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "ambiguous": {
+                    "type": "object",
+                    "required": [
+                      "count",
+                      "expense"
+                    ],
+                    "properties": {
+                      "count": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "expense": {
+                        "type": "string",
+                        "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{2}$"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "not_applicable": {
+                    "type": "object",
+                    "required": [
+                      "count",
+                      "expense"
+                    ],
+                    "properties": {
+                      "count": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "expense": {
+                        "type": "string",
+                        "pattern": "^(0|[1-9][0-9]*)\\.[0-9]{2}$"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "notes": {
+          "type": "object",
+          "required": [
+            "present",
+            "missing"
+          ],
+          "properties": {
+            "present": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "missing": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "proposed_records_by_dimension": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "item",
+              "channel",
+              "context",
+              "meal",
+              "record_note",
+              "merchant"
+            ]
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "refund_links": {
+          "type": "object",
+          "required": [
+            "linked_expense",
+            "unlinked",
+            "target_missing",
+            "target_incompatible"
+          ],
+          "properties": {
+            "linked_expense": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unlinked": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target_missing": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target_incompatible": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "label_coverage": {
+          "type": "object",
+          "required": [
+            "reused",
+            "fallback"
+          ],
+          "properties": {
+            "reused": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "fallback": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "semantics": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": [
+    "format",
+    "contract_version",
+    "source_snapshot_ref",
+    "analysis_ref",
+    "analysis_source_snapshot_ref",
+    "label_source_state",
+    "observed_analysis_ref",
+    "taxonomy_version",
+    "projection_version",
+    "recipe",
+    "taxonomy",
+    "facts",
+    "quality"
+  ],
+  "properties": {
+    "format": {
+      "const": "qianji-analytics"
+    },
+    "contract_version": {
+      "const": "1.0"
+    },
+    "source_snapshot_ref": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}:[0-9]+@[0-9a-f]{64}$"
+    },
+    "analysis_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "analysis_source_snapshot_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}:[0-9]+@[0-9a-f]{64}$"
+    },
+    "label_source_state": {
+      "enum": [
+        "matched",
+        "partial",
+        "absent"
+      ]
+    },
+    "observed_analysis_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "taxonomy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projection_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recipe": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "taxonomy": {
+      "$ref": "#/$defs/taxonomy"
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fact"
+      }
+    },
+    "quality": {
+      "$ref": "#/$defs/quality"
+    }
+  },
+  "additionalProperties": false
+}
